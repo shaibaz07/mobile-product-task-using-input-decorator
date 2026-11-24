@@ -1,0 +1,62 @@
+<div class="card">
+
+    <div class="card-body"
+    [ngClass]="{
+    noProduct : !mobielObj.isAvialable
+}"
+    >
+        <div class="row">
+            <div class="col-md-3">
+                <div class="img-container">
+                    <!-- <img [src]="mobielObj.imageUrl || 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png'"
+                        [alt]="mobielObj.mobileName"> -->
+                          <img [src]="mobielObj.imageUrl"
+                        [alt]="mobielObj.mobileName" *ngIf="mobielObj.imageUrl; else noImg">
+
+                        <ng-template #noImg>
+                            <p>No Image</p>
+                        </ng-template>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h1>
+                    {{mobielObj.mobileName}}
+                    <small class="badge" [ngClass]="{
+                        'badge-success' : mobielObj.ratings >= 4,
+                        'badge-warning' : mobielObj.ratings >= 3 && mobielObj.ratings < 4,
+                        'badge-danger'  : mobielObj.ratings < 3
+                    }">
+                        {{mobielObj.ratings}}
+                    </small>
+                </h1>
+                <h2 class="mb-0">
+                    Features:
+                </h2>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" 
+                    *ngFor="let feature of mobielObj.specification"
+                    >{{feature}}</li>
+                    
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h2>
+                    {{mobielObj.price | currency : 'INR'}}
+                    <br>
+                   <del> <small>
+                        ({{mobielObj.price + (mobielObj.price * .1 ) | currency : 'INR'}})
+                    </small> </del>
+                </h2>
+
+                <strong class="text-danger" *ngIf="mobielObj.avialableUnits < 10">
+                    only {{mobielObj.avialableUnits}} left !!!
+                </strong>
+            </div>
+        </div>
+
+    </div>
+            <p
+            *ngIf="!mobielObj.isAvialable"
+             class="text-danger noProductMsg h3">Product is not avialable</p>
+
+</div>
